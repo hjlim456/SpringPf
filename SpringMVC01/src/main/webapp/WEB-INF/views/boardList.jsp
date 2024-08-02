@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
     
 <!DOCTYPE html>
 <html>
@@ -28,16 +29,24 @@
 		            <td>조회수</td>
 		          </tr>
 		          <c:forEach var="vo" items="${list}">
+		          <%-- 날짜와 시간을 분리하고 초 단위를 제거 --%>
+	              <c:set var="indate" value="${vo.indate}" />
+	              <c:set var="datePart" value="${fn:split(indate, ' ')[0]}" />
+	              <c:set var="timePart" value="${fn:split(indate, ' ')[1]}" />
+	              <c:set var="timeWithoutSeconds" value="${fn:substringBefore(timePart, ':')}:${fn:split(timePart, ':')[1]}" />
+		           
 		           <tr>
-		            <td>${vo.idx}</td>
-		            <td>${vo.title}</a></td>
+		            <td>${vo.idx}</td>	
+		            <td><a href="boardContent.do?idx=${vo.idx}">${vo.title}</a></td>
 		            <td>${vo.writer}</td>
-		            <td>${vo.indate}</td>
+             		<td>${datePart} ${timeWithoutSeconds}</td>
 		            <td>${vo.count}</td>
 		           </tr>
 		          </c:forEach>
 		       </table>    
+		       <a href="boardForm.do" class ="btn btn-primary btn-sm" >글쓰기</a>
 		    </div>
+		    
 		    <div class="panel-footer">인프런_강의</div>
 		  </div>
 </div>
