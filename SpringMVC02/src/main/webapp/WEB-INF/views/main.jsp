@@ -19,7 +19,7 @@
 	  	function loadList(){
 	  		//서버와 통신 : 게시판 리스트 가져오기
 	  		$.ajax({
-	  			url : "boardList.do",
+	  			url : "board/all",
 	  			type : "get",
 	  			dataType : "json",
 	  			success : makeView,
@@ -81,11 +81,12 @@
 	 /*  		
 	 		var title = $("#title").val();
   			var content = $("#content").val();
+  			
   			var writer = $("#writer").val(); */
   			
 	  		var formData = $("#form").serialize();
   			$.ajax({
-  				url : "boardInsert.do",
+  				url : "board/new",
   				type : "post", 
   				data : formData,
   				success : loadList,
@@ -104,7 +105,7 @@
 	  		if($("#c"+idx).css("display")=="none"){
 	  			
 	  			$.ajax({
-	  				url :"boardContent.do",
+	  				url :"board/"+idx,
 	  				type : "get",
 	  				data : {"idx" :idx},
 	  				dataType : "json",
@@ -115,8 +116,8 @@
 	  			})
 	  			
 	  			$.ajax({
-	  				url : "boardCount.do",
-	  				type : "get",
+	  				url : "board/count/"+idx,
+	  				type : "put",
 	  				data : {"idx" : idx},
 	  				dataType : "json",
 	  				success : function(data){
@@ -132,9 +133,8 @@
 	  	}
 	  	function goDelete(idx){
 	  		$.ajax({
-	  			url : "boardDelete.do",
-	  			type : "get",
-	  			data : {"idx" : idx},
+	  			url : "board/"+idx,
+	  			type : "delete",
 	  			success : loadList,
 	  			error : function(){alert("error")}
 	  		})
@@ -155,8 +155,8 @@
 	  		var content = $("#txtArea"+idx).val();
 	  		
 	  		$.ajax({
-	  			url : "boardUpdate.do",
-	  			type : "post",
+	  			url : "board/update",
+	  			type : "put",
 	  			data : {"idx":idx, "title":title, "content":content },
 	  			success : loadList,
 	  			error : function(){alert("Error")}
