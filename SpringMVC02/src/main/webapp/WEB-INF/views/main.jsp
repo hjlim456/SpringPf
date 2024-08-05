@@ -81,7 +81,6 @@
 	 /*  		
 	 		var title = $("#title").val();
   			var content = $("#content").val();
-  			
   			var writer = $("#writer").val(); */
   			
 	  		var formData = $("#form").serialize();
